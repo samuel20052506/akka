@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Lusu Akka?</title>
+    <style>
+        body {
+            text-align: center;
+            background-color: pink;
+            font-family: 'Comic Sans MS', cursive;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        .container {
+            text-align: center;
+        }
+        .buttons {
+            margin-top: 20px;
+            position: relative;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            position: absolute;
+        }
+        #yesBtn {
+            background: lightgreen;
+            left: 40%;
+        }
+        #noBtn {
+            background: salmon;
+            left: 55%;
+            transition: all 0.3s ease;
+        }
+        .message {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+        .heart {
+            display: none;
+            font-size: 100px;
+            color: red;
+            margin-top: 20px;
+        }
+        .anime-img {
+            display: none;
+            width: 50%;
+            max-width: 600px; /* This makes the image bigger */
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        .anime-img.visible {
+            display: block;
+            transform: scale(1.5); /* Scales the image */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="initialMessage">Will you be my one and only Lusu Akka forever and ever? 🥺</h1>
+        <div class="buttons">
+            <button id="yesBtn" onclick="showLove()">YES! 😊</button>
+            <button id="noBtn" onmouseover="moveNo()" onclick="forceYes()">No 😒</button>
+        </div>
+        <div id="message" class="message"></div>
+        <div id="heart" class="heart">❤️</div>
+        <img id="animeHappy" class="anime-img" src="https://i.ibb.co/LDQdKVC5/download.jpg" alt="Happy Sibling Hug">
+        <img id="animeMad" class="anime-img" src="https://i.ibb.co/4wsCTX78/images.jpg" alt="Mad Sibling Hug">
+    </div>
+
+    <script>
+        let noClickCount = 0;
+        function moveNo() {
+            if (noClickCount < 3) {
+                let newX = Math.random() * (window.innerWidth - 150);
+                let newY = Math.random() * (window.innerHeight - 150);
+                document.getElementById("noBtn").style.transform = `translate(${newX}px, ${newY}px)`;
+                noClickCount++;
+            }
+        }
+
+        function forceYes() {
+            if (noClickCount >= 3) {
+                document.getElementById("initialMessage").style.display = "none";
+                document.getElementById("yesBtn").style.display = "none";
+                document.getElementById("noBtn").style.display = "none";
+                document.getElementById("message").innerHTML = "You WILL be my Akka forever! 😤";
+                document.getElementById("message").style.color = "red";
+                document.getElementById("animeMad").style.display = "block";
+            }
+        }
+
+        function showLove() {
+            document.getElementById("initialMessage").style.display = "none";
+            document.getElementById("yesBtn").style.display = "none";
+            document.getElementById("noBtn").style.display = "none";
+            document.getElementById("message").innerHTML = "I love you so much, Akka! ❤️";
+            document.getElementById("heart").style.display = "block";
+            document.getElementById("animeHappy").classList.add("visible");
+        }
+    </script>
+</body>
+</html>
+
+
+
+
