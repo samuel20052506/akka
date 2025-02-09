@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To My Forever Akka 🌸</title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <style>
+        body {
+            font-family: 'Comic Neue', cursive;
+            background: linear-gradient(45deg, #fff0f7, #ffe6ff);
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #ff69b4;
+            font-size: 3em;
+            animation: float 3s infinite;
+        }
+        .love-meter {
+            width: 200px;
+            height: 200px;
+            background: #ff99cc;
+            border-radius: 50%;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            cursor: pointer;
+        }
+        #memory-game {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 20px;
+        }
+        .memory-card {
+            width: 100px;
+            height: 100px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .memory-card:hover {
+            transform: scale(1.1);
+        }
+        #love-notes {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 20px;
+            margin: 20px;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Akka, You’re My Universe! 🌌</h1>
+        
+        <!-- Love Meter -->
+        <div class="love-meter" onclick="showLove()">
+            <span id="love-percent">💖</span>
+        </div>
+
+        <!-- Memory Game -->
+        <div id="memory-game">
+            <div class="memory-card" style="background-image: url('https://i.ibb.co/Ndk1sjx1/Snapchat-752654147.jpg')"></div>
+            <div class="memory-card" style="background-image: url('https://i.ibb.co/3yFbtnT2/Snapchat-466668593.jpg')"></div>
+            <div class="memory-card" style="background-image: url('https://i.ibb.co/MkMHqr6q/Snapchat-1948016614.jpg')"></div>
+        </div>
+
+        <!-- Love Notes -->
+        <div id="love-notes">
+            <h2>Love Notes Just for You! 💌</h2>
+            <input type="text" id="note-input" placeholder="Write a love note...">
+            <button onclick="addNote()">Send Love!</button>
+            <div id="notes-list"></div>
+        </div>
+
+        <!-- Secret Message -->
+        <div id="secret-message" style="display: none;">
+            <p>💖🌸 To My Dearest Akka 🌸💖</p>
+            <p>No words can truly capture how much I love you. You are my guiding star, my forever best friend, and the one who makes my world brighter every day.</p>
+            <p>No matter where life takes us, my love for you will always be infinite. ♾️💞 You are my heart, my soul, my universe! 🌍✨</p>
+            <p>I LOVE YOU SO MUCH, AKKA! ❤️💖💫</p>
+            <p>Forever Yours,<br>[Your Little Bro]</p>
+        </div>
+    </div>
+
+    <script>
+        // Replace with your Firebase keys!
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            databaseURL: "YOUR_DATABASE_URL",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        function showLove() {
+            document.getElementById('love-percent').innerHTML = "∞%";
+            document.getElementById('secret-message').style.display = 'block';
+        }
+
+        function addNote() {
+            const note = document.getElementById('note-input').value;
+            if (note) {
+                database.ref('loveNotes').push().set({
+                    text: note,
+                    timestamp: Date.now()
+                });
+                document.getElementById('note-input').value = '';
+            }
+        }
+
+        database.ref('loveNotes').on('value', (snapshot) => {
+            const notesList = document.getElementById('notes-list');
+            notesList.innerHTML = '';
+            snapshot.forEach((childSnapshot) => {
+                const note = childSnapshot.val().text;
+                const div = document.createElement('div');
+                div.textContent = `💌 ${note}`;
+                notesList.appendChild(div);
+            });
+        });
+    </script>
+</body>
+</html>
